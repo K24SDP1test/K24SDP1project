@@ -7,6 +7,8 @@ COPY --from=build /target/quizzer-0.0.1-SNAPSHOT.jar app/quizzer.jar
 
 RUN useradd -ms /bin/bash myuser
 RUN chown myuser app
+RUN chgrp myuser app
+RUN chmod -R u+w app
 RUN chmod -R gu+w app
 
 EXPOSE 8080
