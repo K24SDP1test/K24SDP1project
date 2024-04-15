@@ -5,9 +5,11 @@ RUN mvn clean package -DskipTests
 FROM openjdk:21-jdk-slim
 COPY --from=build /target/quizzer-0.0.1-SNAPSHOT.jar app/quizzer.jar
 
-RUN touch blaah.txt
-RUN chmod +w app
+RUN useradd -ms /bin/bash myuser
+RUN chmod -R gu+w app
+RUN chown myuser app
 
 EXPOSE 8080
 
+USER myuser
 ENTRYPOINT ["java","-jar","app/quizzer.jar"]
